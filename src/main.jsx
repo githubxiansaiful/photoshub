@@ -4,12 +4,49 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Main from './layout/Main.jsx'
+import Home from './pages/home/Home.jsx'
+import About from './pages/about/About.jsx'
+import Contact from './pages/contact/Contact.jsx'
+import Privacy from './pages/policy/Privacy.jsx'
+import Terms from './pages/policy/Terms.jsx'
+import Faq from './pages/others/Faq.jsx'
+import Blog from './pages/others/Blog.jsx'
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>
+    element: <Main></Main>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>
+      },
+      {
+        path: "/about",
+        element: <About></About>
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>
+      },
+      {
+        path: "/privacy-policy",
+        element: <Privacy></Privacy>
+      },
+      {
+        path: "/terms-conditions",
+        element: <Terms></Terms>
+      },
+      {
+        path: "/faq",
+        element: <Faq></Faq>
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>
+      },
+    ]
   }
 ])
 
