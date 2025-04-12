@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Link } from "react-router-dom";
 import auth from "../firebase/firebase.init";
 import { useState } from "react";
@@ -13,9 +13,10 @@ const Register = () => {
     const handleRegister = e => {
         e.preventDefault();
         const form = e.target;
+        const fullName = e.target.fullName.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        console.log(fullName, email, password);
 
         if (password.length < 6) {
             setRegisterError('Password should be at least 6 characters');
@@ -32,6 +33,17 @@ const Register = () => {
                 console.log(result.user);
                 setRegisterSuccess('User created successfully.');
                 form.reset();
+
+                // Update user full name
+                updateProfile(result.user, {
+                    displayName: fullName,
+                })
+                    .then(() => {
+                        console.log('profle name updated');
+                    })
+                    .catch(() => {
+
+                    })
             })
             .catch((error) => {
                 console.log(error);
@@ -66,7 +78,7 @@ const Register = () => {
                             <form onSubmit={handleRegister}>
                                 <div className="single-input">
                                     <label>Name</label>
-                                    <input type="text" name="name" placeholder="your full name" />
+                                    <input type="text" name="fullName" placeholder="your full name" />
                                 </div>
                                 <div className="single-input">
                                     <label>Email</label>
