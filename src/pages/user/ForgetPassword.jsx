@@ -27,7 +27,7 @@ const ForgetPassword = () => {
     }
 
     return (
-        <div className='auth-page'>
+        <div className='auth-page rest-password'>
             <div className="container">
                 <div>
                     <div className='auth-content-area'>

@@ -127,12 +127,14 @@
 
 .auth-page {
     background-image: url(/login-bg.jpg);
-    height: 100vh;
     background-position: center;
     background-size: cover;
     position: relative;
     display: flex;
     align-items: center;
+}
+.rest-password {
+    height: 60vh;
 }
 
 .register-page {
