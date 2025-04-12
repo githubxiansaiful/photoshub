@@ -5,9 +5,15 @@ import { Outlet } from "react-router-dom";
 const Main = () => {
     return (
         <div>
-            <Nav></Nav>
-            <Outlet></Outlet>
-            <Footer></Footer>
+            <div className="header-area">
+                <Nav></Nav>
+            </div>
+            <div className="main-content">
+                <Outlet></Outlet>
+            </div>
+            <div className="footer-area">
+                <Footer></Footer>
+            </div>
         </div>
     );
 };

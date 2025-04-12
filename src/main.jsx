@@ -11,6 +11,8 @@ import Privacy from './pages/policy/Privacy.jsx'
 import Terms from './pages/policy/Terms.jsx'
 import Faq from './pages/others/Faq.jsx'
 import Blog from './pages/others/Blog.jsx'
+import Login from './pages/user/Login.jsx'
+import Categories from './pages/categories/Categories.jsx'
 
 
 const router = createBrowserRouter([
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog></Blog>
+      },
+      {
+        path: "/categories",
+        element: <Categories></Categories>
+      },
+      {
+        path: "/login",
+        element: <Login></Login>
       },
     ]
   }

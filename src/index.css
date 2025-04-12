@@ -4,18 +4,114 @@
 * {
     font-family: "DM Sans", sans-serif;
 }
+
 .container {
     max-width: 1200px !important;
     width: 90% !important;
     margin-left: auto !important;
     margin-right: auto !important;
 }
+
 .footer-custom-grid {
     display: grid;
     grid-template-columns: auto 100px 1fr 1fr;
-    gap: 1rem; /* Adjust the gap between columns as needed */
+    gap: 1rem;
+    /* Adjust the gap between columns as needed */
 }
 
-.footer-custom-grid > div {
+.footer-custom-grid>div {
     padding-top: 10px;
+}
+
+.nav-btn {
+    border-radius: 12px;
+    background: #191919;
+    color: #fff;
+    display: block;
+    font-size: 19px;
+    height: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+    display: flex;
+    align-items: center;
+    transition: .3s;
+}
+
+.nav-btn:hover {
+    opacity: .9;
+}
+
+.nav-user-profile {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.nav-user-profile img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.nav-menu-items li > a {
+    background: transparent;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 400;
+    transition: .3s;
+}
+
+.nav-menu-items li > a:hover {
+    background: #f1f1f1;
+}
+.has-sub-menu {
+    transition: .3s;
+}
+.has-sub-menu ul {
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ededed;
+    border-radius: 16px;
+    box-shadow: 0 8px 8px 0 rgba(25, 25, 25, .04);
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: .4s;
+}
+
+.has-sub-menu ul a {
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    transition: .3s;
+    padding: 10px 16px 10px 10px;
+}
+.has-sub-menu ul a:hover {
+    background: #f1f1f1;
+}
+.has-sub-menu:hover ul {
+    opacity: 1;
+    visibility: visible;
+}
+.has-sub-menu svg {
+    transition: .4s;
+}
+.has-sub-menu:hover svg.lucide.lucide-chevron-down {
+    transform: rotate(180deg);
+}
+.main-nav {
+    height: 67px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.main-content {
+    padding-top: 67px;
 }
