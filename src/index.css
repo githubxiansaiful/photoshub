@@ -85,6 +85,7 @@
     opacity: 0;
     visibility: hidden;
     transition: .4s;
+    width: 160px;
 }
 
 .has-sub-menu ul a {
@@ -177,7 +178,90 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .header-area {
     position: relative;
     z-index: 9999999;
+}
+
+.mobile-navigation-btn {
+    display: none;
+}
+
+@media all and (max-width: 767px) {
+    .nav-menu-items {
+        display: none;
+    }
+
+    .mobile-navigation-btn {
+        display: block;
+    }
+
+    .mobile-navigation-btn {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background: #f1f1f1;
+        text-align: center;
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav-menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-menu-items .sub-menu {
+        display: none;
+    }
+
+    .has-sub-menu:hover .sub-menu {
+        display: block;
+    }
+
+    .nav-ul-lists {
+        padding: 20px;
+        gap: 10px;
+    }
+}
+
+body.mobile-menu-active {
+    overflow: hidden;
+}
+
+body.mobile-menu-active .main-content {
+    overflow: hidden;
+    position: relative;
+    transition: 5s;
+}
+
+body.mobile-menu-active .main-content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .5;
+    transition: 5s;
+}
+
+.mobile-navigation-btn svg.lucide.lucide-x {
+    width: 0;
+    transition: .3s;
+}
+
+body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-x {
+    width: 100%;
+    transition: .3s;
+}
+
+body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal {
+    width: 0;
+    transition: .3s;
 }
