@@ -13,6 +13,8 @@ import Faq from './pages/others/Faq.jsx'
 import Blog from './pages/others/Blog.jsx'
 import Login from './pages/user/Login.jsx'
 import Categories from './pages/categories/Categories.jsx'
+import Register from './pages/user/Register.jsx'
+import ForgetPassword from './pages/user/ForgetPassword.jsx'
 
 
 const router = createBrowserRouter([
@@ -55,6 +57,14 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>
+      },
+      {
+        path: "/register",
+        element: <Register></Register>
+      },
+      {
+        path: "/forget-password",
+        element: <ForgetPassword></ForgetPassword>
       },
     ]
   }

@@ -24,7 +24,7 @@ const Nav = () => {
     }, []);
 
     return (
-        <header className="bg-white border-b border-[#f1f1f1] py-2 main-nav relative">
+        <header className="bg-white border-b border-[#f1f1f1] py-3 main-nav relative">
             <div className="container">
                 <div className="flex justify-between items-center">
                     <div className="max-w-[120px]">

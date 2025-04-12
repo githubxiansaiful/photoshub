@@ -114,7 +114,7 @@
 }
 
 .main-nav {
-    height: 67px;
+    height: 75px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -122,17 +122,21 @@
 }
 
 .main-content {
-    padding-top: 67px;
+    padding-top: 75px;
 }
 
 .auth-page {
     background-image: url(/login-bg.jpg);
-    height: 70vh;
+    height: 100vh;
     background-position: center;
     background-size: cover;
     position: relative;
     display: flex;
     align-items: center;
+}
+
+.register-page {
+    background-image: url(/register.jpg);
 }
 
 .auth-page:before {
@@ -153,8 +157,12 @@
     border-radius: 30px;
     z-index: 9999;
     position: relative;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
-
+.auth-page.register-page {
+    height: auto;
+}
 .or-login-with-email {
     text-align: center;
     position: relative;
@@ -265,12 +273,14 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     width: 0;
     transition: .3s;
 }
+
 .login-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     justify-content: space-between;
 }
+
 .login-buttons button {
     height: 50px;
     border: 1px solid #ddd;
@@ -282,18 +292,61 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     align-items: center;
     gap: 5px;
     width: 100%;
+    transition: .3s;
 }
+
+.login-buttons button:hover {
+    background: #0000000d;
+    border-color: #0000000d;
+}
+
 .login-buttons button img {
     width: 30px;
 }
+
 @media all and (max-width: 767px) {
     .login-buttons {
         grid-template-columns: repeat(1, 1fr);
     }
+
     .auth-content-area {
         padding: 30px 15px;
     }
+
     .login-buttons button {
         justify-content: center;
     }
+}
+.auth-form {
+    margin-top: 20px;
+}
+.auth-form .single-input {
+    margin-bottom: 20px;
+}
+
+.auth-form .single-input label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.auth-form .single-input input {
+    width: 100%;
+    padding: 13px 16px;
+    color: #4a4a4a;
+    border: 1px solid #dfdfe0;
+    border-radius: 10px;
+}
+.form-submit-btn button {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    border-radius: 10px;
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: .3s;
+}
+.form-submit-btn button:hover {
+    opacity: .9;
 }

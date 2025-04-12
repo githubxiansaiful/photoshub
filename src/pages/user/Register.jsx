@@ -1,62 +1,52 @@
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import React, { useState } from 'react';
-import auth from '../firebase/firebase.init';
-import { Link } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Link } from "react-router-dom";
+import auth from "../firebase/firebase.init";
+import { useState } from "react";
+import { Eye, EyeClosed, EyeOff } from "lucide-react";
 
-const Login = () => {
-    const googleProvider = new GoogleAuthProvider();
+const Register = () => {
 
-    const [user, setUser] = useState(null);
+    const [registerError, setRegisterError] = useState('');
+    const [registerSuccess, setRegisterSuccess] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [loginSuccess, setLoginSuccess] = useState('');
-    const [loginFailed, setLoginFailed] = useState('');
 
-    // Login with Google
-    const handleGoogleSignIn = () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                console.log(result);
-                setUser(result.user);
-            })
-            .catch((error) => {
-                console.log(error);
-                setUser(null);
-            })
-    }
-
-    // Login with email and password
-    const handleEmailLogin = e => {
+    const handleRegister = e => {
         e.preventDefault();
         const form = e.target;
         const email = e.target.email.value;
         const password = e.target.password.value;
-        setLoginSuccess('');
-        setLoginFailed('');
+        console.log(email, password);
 
-        // setup firebase
-        signInWithEmailAndPassword(auth, email, password)
-        .then((loginsuccess) => {
-            console.log(loginsuccess.user);
-            setLoginSuccess('Login Success!');
-            form.reset();
-        })
-        .catch((error) => {
-            setLoginFailed('Invalid-credential, please double check your email and password.')
-            console.log(error);
-        })
+        if (password.length < 6) {
+            setRegisterError('Password should be at least 6 characters');
+            return;
+        }
 
+        // Reset firebase error
+        setRegisterError('');
+        setRegisterSuccess('');
+
+        // Setup Firebase
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                console.log(result.user);
+                setRegisterSuccess('User created successfully.');
+                form.reset();
+            })
+            .catch((error) => {
+                console.log(error);
+                setRegisterError(error.message)
+            })
     }
 
-
     return (
-        <div className='auth-page'>
+        <div className='auth-page register-page'>
             <div className="container">
                 <div>
                     <div className='auth-content-area'>
-                        <h1 className='text-3xl lg:text-4xl font-bold text-center'>Welcome Back 👋</h1>
+                        <h1 className='text-3xl lg:text-4xl font-bold text-center'>Create Account ✨</h1>
                         <div className='login-buttons mt-5 mb-10'>
-                            <button onClick={handleGoogleSignIn}>
+                            <button>
                                 <img src="/google.svg" />
                                 <span className="text-[16px] font-medium">Log in with Google</span>
                             </button>
@@ -70,13 +60,17 @@ const Login = () => {
                             </button>
                         </div>
                         <div className='or-login-with-email'>
-                            <p>Or, log in with your email</p>
+                            <p>Or, create new account with your email</p>
                         </div>
                         <div className="auth-form">
-                            <form onSubmit={handleEmailLogin}>
+                            <form onSubmit={handleRegister}>
+                                <div className="single-input">
+                                    <label>Name</label>
+                                    <input type="text" name="name" placeholder="your full name" />
+                                </div>
                                 <div className="single-input">
                                     <label>Email</label>
-                                    <input type="email" name="email" required placeholder="address@email.com" />
+                                    <input type="email" name="email" required placeholder="name@email.com" />
                                 </div>
                                 <div className="single-input">
                                     <label>Password</label>
@@ -93,26 +87,26 @@ const Login = () => {
                                         </span>
                                     </div>
                                 </div>
-                                <div className='mb-5 underline font-semibold'>
-                                    <Link to="/forget-password" >Forgot your password?</Link>
-                                </div>
                                 {
-                                    loginFailed && <div role="alert" className="alert alert-error alert-soft mb-5">
-                                        <span>{loginFailed}</span>
+                                    registerError && <div role="alert" className="alert alert-error alert-soft mb-5">
+                                        <span>{registerError}</span>
                                     </div>
                                 }
                                 {
-                                    loginSuccess && <div role="alert" className="alert alert-success alert-soft mb-5">
-                                        <span>{loginSuccess} 👍</span>
+                                    registerSuccess && <div role="alert" className="alert alert-success alert-soft mb-5">
+                                        <span>{registerSuccess} 👍</span>
                                     </div>
                                 }
                                 <div className="form-submit-btn">
-                                    <button>Login</button>
+                                    <button>Create New Account</button>
                                 </div>
                             </form>
                         </div>
+                        <div className="text-center my-3">
+                            <p>By joining, you agree to our <Link to="/privacy-policy" className="underline">Privacy Policy</Link> and <Link to="/terms-conditions" className="underline">Terms of Service</Link></p>
+                        </div>
                         <div className='mt-5 text-center'>
-                            <p className='text-[#4a4a4a] font-semibold'>Don't have an account? <Link to="/register" className='text-black underline'>Create account</Link></p>
+                            <p className='text-[#4a4a4a] font-semibold'>Already have an account? <Link to="/login" className='text-black underline'>Log in</Link></p>
                         </div>
                     </div>
                 </div>
@@ -121,4 +115,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
