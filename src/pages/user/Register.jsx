@@ -78,7 +78,7 @@ const Register = () => {
                             <form onSubmit={handleRegister}>
                                 <div className="single-input">
                                     <label>Name</label>
-                                    <input type="text" name="fullName" placeholder="your full name" />
+                                    <input type="text" name="fullName" placeholder="your full name" required />
                                 </div>
                                 <div className="single-input">
                                     <label>Email</label>
