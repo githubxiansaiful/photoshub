@@ -133,6 +133,7 @@
     display: flex;
     align-items: center;
 }
+
 .rest-password {
     height: 60vh;
 }
@@ -162,9 +163,11 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
 .auth-page.register-page {
     height: auto;
 }
+
 .or-login-with-email {
     text-align: center;
     position: relative;
@@ -319,9 +322,11 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
         justify-content: center;
     }
 }
+
 .auth-form {
     margin-top: 20px;
 }
+
 .auth-form .single-input {
     margin-bottom: 20px;
 }
@@ -339,6 +344,7 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     border: 1px solid #dfdfe0;
     border-radius: 10px;
 }
+
 .form-submit-btn button {
     background: #000;
     color: #fff;
@@ -349,6 +355,13 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     cursor: pointer;
     transition: .3s;
 }
+
 .form-submit-btn button:hover {
     opacity: .9;
+}
+
+@media all and (max-width: 500px) {
+    a.nav-btn.upload-btn {
+        display: none !important;
+    }
 }

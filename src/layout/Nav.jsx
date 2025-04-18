@@ -76,10 +76,10 @@ const Nav = () => {
                                                 <li><a href="#" onClick={handleLogOut} className="flex gap-2 items-center"><LogOut /> <span>Log Out</span></a></li>
                                             </ul>
                                         </div>
-                                        <Link to="/upload-image" className="nav-btn hidden md:block">Upload</Link>
+                                        <Link to="/upload-image" className="nav-btn upload-btn">Upload</Link>
                                     </>
                                     :
-                                    <><Link to="/login" className="nav-btn hidden md:block">Login</Link></>
+                                    <><Link to="/login" className="nav-btn">Login</Link></>
                             }
                             <button className="mobile-navigation-btn" onClick={toggleMobileMenu}>
                                 <GripHorizontal />
