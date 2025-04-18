@@ -69,7 +69,7 @@ const Nav = () => {
                                             <div className="nav-user-profile">
                                                 <img src="/user.png" alt="user" />
                                             </div>
-                                            <ul class="sub-menu pl-4">
+                                            <ul class="sub-menu pl-4 user-submenu-panel">
                                                 <li><a href="/user-profile" className="flex gap-2 items-center"><UserRound /> <span>Your Profile</span></a></li>
                                                 <li><a href="/upload-image" className="flex gap-2 items-center"><CloudUpload /> <span>Upload</span></a></li>
                                                 <li><a href="/user-settings"className="flex gap-2 items-center"><Settings /> <span>Settings</span></a></li>

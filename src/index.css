@@ -364,4 +364,8 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     a.nav-btn.upload-btn {
         display: none !important;
     }
+
+    ul.sub-menu.pl-4.user-submenu-panel {
+        right: 20px !important;
+    }
 }
