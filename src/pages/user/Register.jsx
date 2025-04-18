@@ -1,10 +1,15 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Link } from "react-router-dom";
 import auth from "../firebase/firebase.init";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Eye, EyeClosed, EyeOff } from "lucide-react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
+
+    const {createUser} = useContext(AuthContext);
+
+    console.log(createUser);
 
     const [registerError, setRegisterError] = useState('');
     const [registerSuccess, setRegisterSuccess] = useState('');
@@ -28,7 +33,8 @@ const Register = () => {
         setRegisterSuccess('');
 
         // Setup Firebase
-        createUserWithEmailAndPassword(auth, email, password)
+        // createUserWithEmailAndPassword(auth, email, password)
+        createUser(email, password)
             .then((result) => {
                 console.log(result.user);
                 setRegisterSuccess('User created successfully.');
@@ -46,7 +52,7 @@ const Register = () => {
                     })
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
                 setRegisterError(error.message)
             })
     }
@@ -60,15 +66,15 @@ const Register = () => {
                         <div className='login-buttons mt-5 mb-10'>
                             <button>
                                 <img src="/google.svg" />
-                                <span className="text-[16px] font-medium">Log in with Google</span>
+                                <span className="text-[16px] font-medium">Join with Google</span>
                             </button>
                             <button>
                                 <img src="/facebook.svg" />
-                                <span className="text-[16px] font-medium">Log in with Facebook</span>
+                                <span className="text-[16px] font-medium">Join with Facebook</span>
                             </button>
                             <button>
                                 <img src="/twitter.svg" />
-                                <span className="text-[16px] font-medium">Log in with X(Twitter)</span>
+                                <span className="text-[16px] font-medium">Join with X(Twitter)</span>
                             </button>
                         </div>
                         <div className='or-login-with-email'>

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { ChevronDown, GripHorizontal, X } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
+import { ChevronDown, CloudUpload, GripHorizontal, LogOut, Settings, UserRound, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Nav = () => {
+    const { user, logOut } = useContext(AuthContext);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
@@ -15,6 +17,17 @@ const Nav = () => {
             document.body.classList.remove("mobile-menu-active");
         }
     };
+
+    // Logout User handler
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                console.log('User loggedout successfully.');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
     // Inside your Nav component
     useEffect(() => {
@@ -49,10 +62,25 @@ const Nav = () => {
 
                         {/* Right Buttons */}
                         <div className="flex gap-3 nav-right-buttons items-center">
-                            <div className="nav-user-profile">
-                                <img src="/user.png" alt="user" />
-                            </div>
-                            <Link to="/login" className="nav-btn hidden md:block">Login</Link>
+                            {
+                                user ?
+                                    <>
+                                        <div className="user-profile-container has-sub-menu">
+                                            <div className="nav-user-profile">
+                                                <img src="/user.png" alt="user" />
+                                            </div>
+                                            <ul class="sub-menu pl-4">
+                                                <li><a href="/user-profile" className="flex gap-2 items-center"><UserRound /> <span>Your Profile</span></a></li>
+                                                <li><a href="/upload-image" className="flex gap-2 items-center"><CloudUpload /> <span>Upload</span></a></li>
+                                                <li><a href="/user-settings"className="flex gap-2 items-center"><Settings /> <span>Settings</span></a></li>
+                                                <li><a href="#" onClick={handleLogOut} className="flex gap-2 items-center"><LogOut /> <span>Log Out</span></a></li>
+                                            </ul>
+                                        </div>
+                                        <Link to="/upload-image" className="nav-btn hidden md:block">Upload</Link>
+                                    </>
+                                    :
+                                    <><Link to="/login" className="nav-btn hidden md:block">Login</Link></>
+                            }
                             <button className="mobile-navigation-btn" onClick={toggleMobileMenu}>
                                 <GripHorizontal />
                                 <X />

@@ -1,11 +1,13 @@
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import auth from '../firebase/firebase.init';
 import { Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Login = () => {
     const googleProvider = new GoogleAuthProvider();
+    const { loginWithPassword } = useContext(AuthContext);
 
     const [user, setUser] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +37,7 @@ const Login = () => {
         setLoginFailed('');
 
         // setup firebase
-        signInWithEmailAndPassword(auth, email, password)
+        loginWithPassword(email, password)
         .then((loginsuccess) => {
             console.log(loginsuccess.user);
             setLoginSuccess('Login Success!');
