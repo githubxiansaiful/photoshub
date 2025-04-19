@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Nav = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut, loading } = useContext(AuthContext);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const menuWrapperRef = useRef(null); // Ref for detecting outside click
 
@@ -84,7 +84,9 @@ const Nav = () => {
 
                         {/* Right Buttons */}
                         <div className="flex gap-3 nav-right-buttons items-center">
-                            {
+                            {loading ? (
+                                <span className="loading loading-ring loading-xl"></span>
+                            ) :
                                 user ?
                                     <>
                                         <div className="user-profile-container has-sub-menu">
