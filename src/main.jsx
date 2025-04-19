@@ -19,12 +19,14 @@ import Profile from './pages/user/profile/Profile.jsx'
 import Settings from './pages/user/profile/Settings.jsx'
 import PrivateRoute from './routes/PrivateRoute.jsx'
 import UploadImage from './pages/user/profile/UploadImage.jsx'
+import PageNotFound from './pages/errorpage/PageNotFound.jsx'
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <PageNotFound></PageNotFound>,
     children: [
       {
         path: "/",

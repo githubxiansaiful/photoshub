@@ -1,13 +1,14 @@
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import auth from '../firebase/firebase.init';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { AuthContext } from '../../providers/AuthProvider';
 
 const Login = () => {
     const googleProvider = new GoogleAuthProvider();
     const { loginWithPassword } = useContext(AuthContext);
+    const redirectAfterLogin = useNavigate();
 
     const [user, setUser] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,7 @@ const Login = () => {
             .then((result) => {
                 console.log(result);
                 setUser(result.user);
+                redirectAfterLogin('/profile');
             })
             .catch((error) => {
                 console.log(error);
@@ -38,15 +40,16 @@ const Login = () => {
 
         // setup firebase
         loginWithPassword(email, password)
-        .then((loginsuccess) => {
-            console.log(loginsuccess.user);
-            setLoginSuccess('Login Success!');
-            form.reset();
-        })
-        .catch((error) => {
-            setLoginFailed('Invalid-credential, please double check your email and password.')
-            console.log(error);
-        })
+            .then((loginsuccess) => {
+                console.log(loginsuccess.user);
+                setLoginSuccess('Login Success!');
+                form.reset();
+                redirectAfterLogin('/profile');
+            })
+            .catch((error) => {
+                setLoginFailed('Invalid-credential, please double check your email and password.')
+                console.log(error);
+            })
 
     }
 
