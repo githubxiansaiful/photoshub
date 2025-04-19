@@ -67,7 +67,7 @@ const Nav = () => {
                     </div>
                     <div ref={menuWrapperRef} className="flex items-center gap-3">
                         {/* Mobile Menu */}
-                        <ul className={`nav-menu-items fixed top-[67px] lg:top-[unset] right-0 bg-white z-50 transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} h-screen w-[300px] max-w-full md:static md:h-auto md:w-auto md:flex md:translate-x-0 nav-ul-lists`}>
+                        <ul className={`nav-menu-items fixed top-[75px] lg:top-[unset] right-0 bg-white z-50 transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} h-screen w-[300px] max-w-full md:static md:h-auto md:w-auto md:flex md:translate-x-0 nav-ul-lists`}>
                             <li><Link to="/">Home</Link></li>
                             <li><Link to="/categories">Categories</Link></li>
                             <li><Link to="/license">License</Link></li>
