@@ -367,5 +367,6 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
 
     ul.sub-menu.pl-4.user-submenu-panel {
         right: 20px !important;
+        z-index: 9999999999999;
     }
 }

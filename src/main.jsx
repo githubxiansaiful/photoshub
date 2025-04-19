@@ -15,6 +15,10 @@ import Categories from './pages/categories/Categories.jsx'
 import Register from './pages/user/Register.jsx'
 import ForgetPassword from './pages/user/ForgetPassword.jsx'
 import AuthProvider from './providers/AuthProvider.jsx'
+import Profile from './pages/user/profile/Profile.jsx'
+import Settings from './pages/user/profile/Settings.jsx'
+import PrivateRoute from './routes/PrivateRoute.jsx'
+import UploadImage from './pages/user/profile/UploadImage.jsx'
 
 
 const router = createBrowserRouter([
@@ -66,6 +70,19 @@ const router = createBrowserRouter([
         path: "/forget-password",
         element: <ForgetPassword></ForgetPassword>
       },
+      // User Profile
+      {
+        path: "/profile",
+        element: <PrivateRoute><Profile /></PrivateRoute>
+      },
+      {
+        path: "/user-settings",
+        element: <PrivateRoute><Settings></Settings></PrivateRoute>
+      },
+      {
+        path: "/upload-image",
+        element: <PrivateRoute><UploadImage></UploadImage></PrivateRoute>
+      }
     ]
   }
 ])
