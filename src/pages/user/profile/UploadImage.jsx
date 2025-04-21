@@ -4,19 +4,75 @@ import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../../../providers/AuthProvider";
 
 const UploadImage = () => {
-    const [imageInputs, setImageInputs] = useState([{ id: Date.now(), url: "", valid: false }]);
     const [popupImage, setPopupImage] = useState(null); // for preview popup
     const [loading, setLoading] = useState(false);
     const formRef = useRef();
     const { user } = useContext(AuthContext);
 
-    const handleImageUrlChange = (index, value) => {
+    const [imageInputs, setImageInputs] = useState([
+        {
+            id: Date.now(),
+            url: "",
+            valid: false,
+            title: "",
+            category: "",
+            tag: "",
+        },
+    ]);
+
+    // 🔍 On image URL change, call the image recognition API:
+    const analyzeImage = async (url) => {
+        try {
+            const res = await fetch("https://api.imagga.com/v2/tags?image_url=" + encodeURIComponent(url), {
+                headers: {
+                    Authorization: "Basic " + btoa("acc_16e964c30deaa75:ab6326c12d0a7ad9886889c35c2727c3")
+                }
+            });
+
+            const data = await res.json();
+
+            if (!data.result || !data.result.tags) {
+                console.error("Image analysis failed:", data);
+                return {
+                    title: "",
+                    category: "",
+                    tag: "",
+                };
+            }
+
+            const topTags = data.result.tags.slice(0, 3).map(t => t.tag.en);
+
+            return {
+                title: topTags[0] || "",
+                category: topTags[1] || "General",
+                tag: topTags.join(", ") || "",
+            };
+        } catch (error) {
+            console.error("Image metadata error:", error);
+            return {
+                title: "",
+                category: "",
+                tag: "",
+            };
+        }
+    };
+
+
+    // 🔄 Update form automatically:
+    const handleImageUrlChange = async (index, value) => {
         const newInputs = [...imageInputs];
         newInputs[index].url = value;
 
         const img = new Image();
-        img.onload = () => {
+        img.onload = async () => {
             newInputs[index].valid = true;
+
+            // 🎯 Auto-generate metadata
+            const meta = await analyzeImage(value);
+            newInputs[index].title = meta.title;
+            newInputs[index].category = meta.category;
+            newInputs[index].tag = meta.tag;
+
             setImageInputs([...newInputs]);
         };
         img.onerror = () => {
@@ -27,6 +83,7 @@ const UploadImage = () => {
 
         setImageInputs(newInputs);
     };
+
 
     const handleAddNewImage = () => {
         if (imageInputs.length < 5) {
@@ -42,13 +99,21 @@ const UploadImage = () => {
         setPopupImage(null);
     };
 
+    const handleInputChange = (index, field, value) => {
+        const newInputs = [...imageInputs];
+        newInputs[index][field] = value;
+        setImageInputs(newInputs);
+    };
+
+
+
+
     // Send image to server
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const validUrls = imageInputs.filter((img) => img.valid && img.url).map((img) => img.url);
-
-        if (validUrls.length === 0) {
+        const validImages = imageInputs.filter((img) => img.valid && img.url);
+        if (validImages.length === 0) {
             return toast.error("Please enter at least one valid image URL.");
         }
 
@@ -59,7 +124,12 @@ const UploadImage = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    images: validUrls,
+                    images: validImages.map(img => ({
+                        url: img.url,
+                        title: img.title,
+                        category: img.category,
+                        tag: img.tag,
+                    })),
                     user: {
                         displayName: user?.displayName,
                         email: user?.email,
@@ -87,9 +157,8 @@ const UploadImage = () => {
 
         try {
             const data = await uploadPromise; // already parsed JSON
-
             // ✅ reset form after success
-            setImageInputs([{ id: Date.now(), url: "", valid: false }]);
+            setImageInputs([{ id: Date.now(), url: "", valid: false, title: "", category: "", tag: "", description: "" }]);
             setPopupImage(null);
             formRef.current?.reset(); // optional, mostly visual
         } catch (error) {
@@ -100,6 +169,7 @@ const UploadImage = () => {
             }, 2000);
         }
     };
+
 
 
     return (
@@ -115,23 +185,48 @@ const UploadImage = () => {
                 <div className="img-upload-form-container">
                     <form onSubmit={handleSubmit} className="image-upload-form space-y-5">
                         {imageInputs.map((input, index) => (
-                            <div className="image-url-preview" key={input.id}>
-                                <div
-                                    className="preview-image cursor-pointer"
-                                    onClick={() => openPopup(input.valid ? input.url : null)}
-                                >
-                                    <img
-                                        src={input.valid ? input.url : "/landscape-placeholder.svg"}
-                                        alt="Preview"
+                            <div className="bg-[#f1f1f1e6] p-5 rounded-2xl" key={input.id}>
+                                <div className="image-url-preview">
+                                    <div className="preview-image cursor-pointer" onClick={() => openPopup(input.valid ? input.url : null)}>
+                                        <img
+                                            src={input.valid ? input.url : "/landscape-placeholder.svg"}
+                                            alt="Preview"
+                                        />
+                                    </div>
+                                    <input
+                                        type="url"
+                                        placeholder="Type or Paste valid image URL"
+                                        value={input.url}
+                                        onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                                        className="w-full border p-2"
                                     />
                                 </div>
-                                <input
-                                    type="url"
-                                    placeholder="Type or Paste valid image URL"
-                                    value={input.url}
-                                    onChange={(e) => handleImageUrlChange(index, e.target.value)}
-                                    className="w-full border p-2"
-                                />
+
+                                {/* Metadata Inputs */}
+                                <div className="image-metadata-inputs">
+                                    <p>Meta Data</p>
+                                    <input
+                                        type="text"
+                                        placeholder="Title (optional)"
+                                        value={input.title}
+                                        onChange={(e) => handleInputChange(index, 'title', e.target.value)}
+                                        className="w-full border p-2 mt-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Category (optional)"
+                                        value={input.category}
+                                        onChange={(e) => handleInputChange(index, 'category', e.target.value)}
+                                        className="w-full border p-2 mt-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Tags (optional)"
+                                        value={input.tag}
+                                        onChange={(e) => handleInputChange(index, 'tag', e.target.value)}
+                                        className="w-full border p-2 mt-2"
+                                    />
+                                </div>
                             </div>
                         ))}
 
