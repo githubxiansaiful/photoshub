@@ -401,3 +401,54 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     background: #eee;
     border-radius: 10px;
 }
+
+/* Upload image form */
+.image-url-preview {
+    display: flex;
+    gap: 10px;
+}
+.image-url-preview input {
+    flex: 1;
+    border: 1px solid #ddd;
+    height: 50px;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+.preview-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+.preview-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.upload-image-btn button {
+    width: 100%;
+    background: #191919;
+    transition: .3s;
+    padding: 15px 0;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+}
+.upload-image-btn button:hover {
+    background: #303030;
+}
+.img-upload-form-container {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+}
+@media all and (max-width: 767px) {
+    .img-upload-form-container {
+        padding: 30px 20px;
+    }
+}

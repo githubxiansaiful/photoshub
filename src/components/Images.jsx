@@ -7,7 +7,7 @@ const Images = () => {
     const [loadingMore, setLoadingMore] = useState(false);
 
     useEffect(() => {
-        fetch("/images.json")
+        fetch("https://photoshub-server.vercel.app/images")
             .then(res => res.json())
             .then(data => setImages(data))
             .catch(err => console.error("Error loading images:", err));
