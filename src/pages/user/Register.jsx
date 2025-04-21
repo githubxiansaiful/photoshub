@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../firebase/firebase.init";
 import { useContext, useState } from "react";
 import { Eye, EyeClosed, EyeOff } from "lucide-react";
@@ -7,13 +7,13 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
 
-    const {createUser} = useContext(AuthContext);
-
-    console.log(createUser);
-
+    const { createUser, loginWithGoogle } = useContext(AuthContext);
     const [registerError, setRegisterError] = useState('');
     const [registerSuccess, setRegisterSuccess] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [user, setUser] = useState(null);
+    const redirectAfterLogin = useNavigate();
+
 
     const handleRegister = e => {
         e.preventDefault();
@@ -57,6 +57,21 @@ const Register = () => {
             })
     }
 
+    // Setup Google Login
+    // Login with Google
+    const handleGoogleSignIn = () => {
+        loginWithGoogle()
+            .then((result) => {
+                console.log(result);
+                setUser(result.user);
+                redirectAfterLogin('/profile');
+            })
+            .catch((error) => {
+                console.log(error);
+                setUser(null);
+            })
+    }
+
     return (
         <div className='auth-page register-page'>
             <div className="container">
@@ -64,7 +79,7 @@ const Register = () => {
                     <div className='auth-content-area'>
                         <h1 className='text-3xl lg:text-4xl font-bold text-center'>Create Account ✨</h1>
                         <div className='login-buttons mt-5 mb-10'>
-                            <button>
+                            <button onClick={handleGoogleSignIn}>
                                 <img src="/google.svg" />
                                 <span className="text-[16px] font-medium">Join with Google</span>
                             </button>

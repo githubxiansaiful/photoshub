@@ -6,8 +6,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { AuthContext } from '../../providers/AuthProvider';
 
 const Login = () => {
-    const googleProvider = new GoogleAuthProvider();
-    const { loginWithPassword } = useContext(AuthContext);
+    const { loginWithPassword, loginWithGoogle } = useContext(AuthContext);
     const redirectAfterLogin = useNavigate();
 
     const [user, setUser] = useState(null);
@@ -17,7 +16,7 @@ const Login = () => {
 
     // Login with Google
     const handleGoogleSignIn = () => {
-        signInWithPopup(auth, googleProvider)
+        loginWithGoogle()
             .then((result) => {
                 console.log(result);
                 setUser(result.user);
