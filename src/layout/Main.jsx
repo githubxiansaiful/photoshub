@@ -2,6 +2,7 @@ import Nav from "../layout/Nav";
 import Footer from "../layout/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
+import { Toaster } from "react-hot-toast";
 
 const Main = () => {
     const location = useLocation();
@@ -9,6 +10,7 @@ const Main = () => {
 
     return (
         <div>
+            <Toaster position="bottom-left" reverseOrder={false} />
             <ScrollToTop />
             <div className="header-area">
                 <Nav />

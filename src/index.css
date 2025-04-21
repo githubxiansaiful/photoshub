@@ -435,6 +435,7 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     cursor: pointer;
     text-align: center;
     border-radius: 10px;
+    justify-content: center;
 }
 .upload-image-btn button:hover {
     background: #303030;

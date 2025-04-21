@@ -1,9 +1,14 @@
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useContext, useRef, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const UploadImage = () => {
     const [imageInputs, setImageInputs] = useState([{ id: Date.now(), url: "", valid: false }]);
     const [popupImage, setPopupImage] = useState(null); // for preview popup
+    const [loading, setLoading] = useState(false);
+    const formRef = useRef();
+    const { user } = useContext(AuthContext);
 
     const handleImageUrlChange = (index, value) => {
         const newInputs = [...imageInputs];
@@ -37,6 +42,66 @@ const UploadImage = () => {
         setPopupImage(null);
     };
 
+    // Send image to server
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const validUrls = imageInputs.filter((img) => img.valid && img.url).map((img) => img.url);
+
+        if (validUrls.length === 0) {
+            return toast.error("Please enter at least one valid image URL.");
+        }
+
+        setLoading(true);
+
+        const uploadPromise = new Promise((resolve, reject) => {
+            fetch("http://localhost:5000/images", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    images: validUrls,
+                    user: {
+                        displayName: user?.displayName,
+                        email: user?.email,
+                        photoURL: user?.photoURL,
+                    },
+                }),
+            })
+                .then(async (res) => {
+                    const data = await res.json();
+                    setTimeout(() => {
+                        if (res.ok) resolve(data);
+                        else reject(data);
+                    }, 2000);
+                })
+                .catch((err) => {
+                    setTimeout(() => reject(err), 2000);
+                });
+        });
+
+        toast.promise(uploadPromise, {
+            loading: "Uploading...",
+            success: "Upload successful!",
+            error: "Upload failed. Try again!",
+        });
+
+        try {
+            const data = await uploadPromise; // already parsed JSON
+
+            // ✅ reset form after success
+            setImageInputs([{ id: Date.now(), url: "", valid: false }]);
+            setPopupImage(null);
+            formRef.current?.reset(); // optional, mostly visual
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        }
+    };
+
+
     return (
         <div className="my-10">
             <div className="container">
@@ -48,7 +113,7 @@ const UploadImage = () => {
                 </div>
 
                 <div className="img-upload-form-container">
-                    <form className="image-upload-form space-y-5">
+                    <form onSubmit={handleSubmit} className="image-upload-form space-y-5">
                         {imageInputs.map((input, index) => (
                             <div className="image-url-preview" key={input.id}>
                                 <div
@@ -77,8 +142,17 @@ const UploadImage = () => {
                         )}
 
                         <div className="upload-image-btn">
-                            <button type="submit">Upload Image</button>
+                            <button type="submit" disabled={loading} className="flex items-center gap-2">
+                                {loading ? (
+                                    <>
+                                        Uploading Image <span className="loading loading-spinner loading-sm"></span>
+                                    </>
+                                ) : (
+                                    "Upload Image"
+                                )}
+                            </button>
                         </div>
+
                     </form>
                 </div>
             </div>
