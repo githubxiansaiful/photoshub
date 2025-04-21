@@ -120,7 +120,7 @@ const UploadImage = () => {
         setLoading(true);
 
         const uploadPromise = new Promise((resolve, reject) => {
-            fetch("http://localhost:5000/images", {
+            fetch("https://photoshub-server.vercel.app/images", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
