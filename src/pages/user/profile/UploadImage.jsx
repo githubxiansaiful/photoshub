@@ -175,7 +175,7 @@ const UploadImage = () => {
     return (
         <div className="my-10">
             <div className="container">
-                <div className="flex justify-center">
+                <div className="flex w-[210px] h-[105px] m-auto">
                     <img src="/cam-icons.jpg" alt="" />
                 </div>
                 <div className="mt-5 mb-5">
