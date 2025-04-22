@@ -3,10 +3,10 @@ import { ChevronDown, CloudUpload, GripHorizontal, LogOut, Settings, UserRound, 
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
-const Nav = () => {
+const Nav = ({ onOpenCategory }) => {
     const { user, logOut, loading } = useContext(AuthContext);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const menuWrapperRef = useRef(null); // Ref for detecting outside click
+    const menuWrapperRef = useRef(null);
 
     const toggleMobileMenu = () => {
         const newState = !mobileMenuOpen;
@@ -58,6 +58,7 @@ const Nav = () => {
         };
     }, [mobileMenuOpen]);
 
+
     return (
         <header className="bg-white border-b border-[#f1f1f1] py-3 main-nav relative">
             <div className="container">
@@ -69,7 +70,7 @@ const Nav = () => {
                         {/* Mobile Menu */}
                         <ul className={`nav-menu-items fixed top-[75px] lg:top-[unset] right-0 bg-white z-50 transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} h-screen w-[300px] max-w-full md:static md:h-auto md:w-auto md:flex md:translate-x-0 nav-ul-lists`}>
                             <li><Link to="/">Home</Link></li>
-                            <li><Link to="/categories">Categories</Link></li>
+                            <li><Link to="#" onClick={onOpenCategory}>Categories</Link></li>
                             <li><Link to="/license">License</Link></li>
                             <li className="has-sub-menu">
                                 <a href="#" className="flex items-center gap-1">More <ChevronDown /></a>
