@@ -8,6 +8,7 @@ import About from './pages/about/About.jsx'
 import Contact from './pages/contact/Contact.jsx'
 import Privacy from './pages/policy/Privacy.jsx'
 import Terms from './pages/policy/Terms.jsx'
+import License from './pages/policy/License.jsx'
 import Faq from './pages/others/Faq.jsx'
 import Blog from './pages/others/Blog.jsx'
 import Login from './pages/user/Login.jsx'
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "/upload-image",
         element: <PrivateRoute><UploadImage></UploadImage></PrivateRoute>
+      },
+      {
+        path: "/license",
+        element: <License></License>
       }
     ]
   }

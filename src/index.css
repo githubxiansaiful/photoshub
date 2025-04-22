@@ -485,7 +485,8 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
 
 .categor-popup-content {
     background: #fff;
-    width: 400px;
+    max-width: 400px;
+    width: 95%;
     height: 100%;
     position: absolute;
     right: 0;
@@ -506,6 +507,7 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
 .category-items li {
     margin-bottom: 10px;
     transition: .3s;
+    text-transform: capitalize;
 }
 .category-items li:hover {
     opacity: .5;
