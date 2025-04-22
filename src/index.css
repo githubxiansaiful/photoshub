@@ -499,16 +499,88 @@ body.mobile-menu-active .mobile-navigation-btn svg.lucide.lucide-grip-horizontal
     transform: translateX(0);
     /* slide in */
 }
-.category-items  {
+
+.category-items {
     height: calc(100vh - 60px);
     overflow-y: scroll;
     padding: 20px;
 }
+
 .category-items li {
     margin-bottom: 10px;
     transition: .3s;
     text-transform: capitalize;
 }
+
 .category-items li:hover {
     opacity: .5;
+}
+
+.img-box-inner {
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+}
+
+.image-popup-overlay {
+    width: 100%;
+    height: 100vh;
+    background: #000000b0;
+    position: fixed;
+    z-index: 99999999999999;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-popup-container {
+    background: #fff;
+    overflow-y: scroll;
+    max-width: 800px;
+    width: 90%;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    max-height: 90vh;
+}
+
+.img-popup-nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.img-popup-nav-buttons button {
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.img-popup-nav-buttons .download-image {
+    background: #191919;
+    border-color: #191919;
+    color: #fff;
+}
+
+.img-popup-nav-buttons .download-image:hover {
+    background: #303030;
+}
+
+.give-like-image {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.give-like-image:hover {
+    background: #f1f1f1;
+}
+.popup-image-value {
+   display: flex;
+   justify-content: center;
 }

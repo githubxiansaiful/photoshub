@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import MasonryImage from "./MasonryImage";
+import OpenImgPopup from "./OpenImgPopup.jsx";
+
 
 const Images = () => {
     const [images, setImages] = useState([]);
     const [visibleCount, setVisibleCount] = useState(12);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [isLoading, setIsLoading] = useState(true); // Add loading state
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         fetch("https://photoshub-server.vercel.app/images")
@@ -37,14 +41,30 @@ const Images = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [images, visibleCount, loadingMore]);
 
+    const handleImageClick = (img) => {
+        setSelectedImage(img);
+        setShowPopup(true);
+        console.log("something happen on image");
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setSelectedImage(null);
+    };
+
     return (
         <>
             {isLoading ? (  // Conditionally render the loading spinner based on loading state
                 <div className="h-[80vh] flex items-center justify-center"><span className="loading loading-spinner loading-xl"></span></div>
             ) : (
                 <div className="my-10 all-images">
-                    {images.slice(0, visibleCount).map((img, index) => (
+                    {/* {images.slice(0, visibleCount).map((img, index) => (
                         <div key={index} className="img-box">
+                            <MasonryImage src={img.imgUrl} alt={img.title || `Image ${index + 1}`} />
+                        </div>
+                    ))} */}
+                    {images.slice(0, visibleCount).map((img, index) => (
+                        <div key={index} className="img-box cursor-pointer" onClick={() => handleImageClick(img)}>
                             <MasonryImage src={img.imgUrl} alt={img.title || `Image ${index + 1}`} />
                         </div>
                     ))}
@@ -58,6 +78,9 @@ const Images = () => {
                     </div>
                 )}
             </div>
+            {showPopup && (
+                <OpenImgPopup image={selectedImage} onClose={handleClosePopup} />
+            )}
         </>
     );
 };
