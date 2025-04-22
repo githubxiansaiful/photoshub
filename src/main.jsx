@@ -21,6 +21,7 @@ import Settings from './pages/user/profile/Settings.jsx'
 import PrivateRoute from './routes/PrivateRoute.jsx'
 import UploadImage from './pages/user/profile/UploadImage.jsx'
 import PageNotFound from './pages/errorpage/PageNotFound.jsx'
+import RedirectIfAuth from './routes/RedirectIfAuth.jsx'
 
 
 const router = createBrowserRouter([
@@ -63,11 +64,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login></Login>
+        element: <RedirectIfAuth><Login></Login></RedirectIfAuth>
       },
       {
         path: "/register",
-        element: <Register></Register>
+        element: <RedirectIfAuth><Register></Register></RedirectIfAuth>
       },
       {
         path: "/forget-password",
