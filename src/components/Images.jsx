@@ -10,6 +10,7 @@ const Images = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     useEffect(() => {
         fetch("https://photoshub-server.vercel.app/images")
@@ -41,10 +42,26 @@ const Images = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [images, visibleCount, loadingMore]);
 
-    const handleImageClick = (img) => {
+    const handleImageClick = (img, index) => {
         setSelectedImage(img);
+        setSelectedIndex(index);
         setShowPopup(true);
-        console.log("something happen on image");
+        console.log("click");
+    };
+    const handlePrev = () => {
+        if (selectedIndex > 0) {
+            const newIndex = selectedIndex - 1;
+            setSelectedIndex(newIndex);
+            setSelectedImage(images[newIndex]);
+        }
+    };
+
+    const handleNext = () => {
+        if (selectedIndex < images.length - 1) {
+            const newIndex = selectedIndex + 1;
+            setSelectedIndex(newIndex);
+            setSelectedImage(images[newIndex]);
+        }
     };
 
     const handleClosePopup = () => {
@@ -64,7 +81,7 @@ const Images = () => {
                         </div>
                     ))} */}
                     {images.slice(0, visibleCount).map((img, index) => (
-                        <div key={index} className="img-box cursor-pointer" onClick={() => handleImageClick(img)}>
+                        <div key={index} className="img-box cursor-pointer" onClick={() => handleImageClick(img, index)}>
                             <MasonryImage src={img.imgUrl} alt={img.title || `Image ${index + 1}`} />
                         </div>
                     ))}
@@ -79,7 +96,14 @@ const Images = () => {
                 )}
             </div>
             {showPopup && (
-                <OpenImgPopup image={selectedImage} onClose={handleClosePopup} />
+                <OpenImgPopup
+                    image={selectedImage}
+                    onClose={handleClosePopup}
+                    onPrev={handlePrev}
+                    onNext={handleNext}
+                    isFirst={selectedIndex === 0}
+                    isLast={selectedIndex === images.length - 1}
+                />
             )}
         </>
     );
