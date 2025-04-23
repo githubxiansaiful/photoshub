@@ -68,7 +68,7 @@ const OpenImgPopup = ({ image, onClose, onPrev, onNext, isFirst, isLast }) => {
                             </div>
                             <div className="">
                                 <h3 className="text-[14px] lg:text-xl font-bold">{image.user.displayName}</h3>
-                                <p className="text-[#7f7f7f] text-[8px] lg:text-[16px] font-semibold -mt-[5px]">Donate Uploader</p>
+                                <p className="text-[#7f7f7f] text-[8px] lg:text-[16px] font-semibold -mt-[5px]">Uploader</p>
                             </div>
                         </div>
                         <div className="img-popup-nav-buttons">
