@@ -13,7 +13,7 @@ const Images = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
 
     useEffect(() => {
-        fetch("https://photoshub-server.vercel.app/stock-photos-hub")
+        fetch("https://photoshub-server.vercel.app/images")
             .then(res => res.json())
             .then(data => {
                 setImages(data);
