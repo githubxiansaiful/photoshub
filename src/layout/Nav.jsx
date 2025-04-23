@@ -64,7 +64,7 @@ const Nav = ({ onOpenCategory }) => {
             <div className="container">
                 <div className="flex justify-between items-center">
                     <div className="max-w-[120px]">
-                        <Link to="/"><img src="/logo.png" alt="photoshub" /></Link>
+                        <Link to="/"><img src="/photoshub.png" alt="photoshub" /></Link>
                     </div>
                     <div ref={menuWrapperRef} className="flex items-center gap-3">
                         {/* Mobile Menu */}
